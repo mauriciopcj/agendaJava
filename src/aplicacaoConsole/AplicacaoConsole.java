@@ -9,6 +9,7 @@
 
 package aplicacaoConsole;
 
+import fachada.Fachada;
 import modelo.Contato;
 import modelo.Telefone;
 
@@ -16,16 +17,72 @@ public class AplicacaoConsole {
 
 	public static void main(String[] args) {
 
-		Telefone t1 = new Telefone("83","999803355");
-		Telefone t2 = new Telefone("83","986072950");
-		System.out.println(t1);
+		try {
+			Fachada.cadastrarContato("Mauricio", "mauricio@mauricio", "58052", "nome da rua", "115", "mauriciojunior", 1, 9, 22);
+			System.out.println("Cadastrar Contato >> Contato cadastrado com sucesso!");
+		} catch (Exception a){
+			System.out.println(a.getMessage());
+		}
 		
-		Contato c1 = new Contato("Mauricio", "mauricio@mauricio", "58052", "nome da rua", "115", "mauriciojunior", 1, 9, 22);
-		System.out.println(c1);
+		try {
+			Fachada.cadastrarContato("Mauro", "mauricio@mauricio", "58052", "nome da rua", "115", "mauriciojunior", 1, 9, 22);
+			System.out.println("Cadastrar Contato >> Contato cadastrado com sucesso!");
+		} catch (Exception a){
+			System.out.println(a.getMessage());
+		}
 		
-		c1.adicionar(t1);
-		c1.adicionar(t2);
-		System.out.println(c1);
+		try {
+			Fachada.cadastrarContato("Jose", "mauricio@mauricio", "58052", "nome da rua", "115", "mauriciojunior", 1, 9, 22);
+			System.out.println("Cadastrar Contato >> Contato cadastrado com sucesso!");
+		} catch (Exception a){
+			System.out.println(a.getMessage());
+		}
+		
+		try {
+			Fachada.adicionarTelefone("Mauricio", "83", "999803355");
+			System.out.println("Adicionar Telefone >> Telefone adicionado com sucesso!");
+		} catch (Exception a) {
+			System.out.println(a.getMessage());
+		}
+		System.out.println(Fachada.listarTelefones());
+		
+		try {
+			Fachada.adicionarTelefone("Mauricio", "83", "999803355");
+			System.out.println("Adicionar Telefone >> Telefone adicionado com sucesso!");
+		} catch (Exception a) {
+			System.out.println(a.getMessage());
+		}
+		System.out.println(Fachada.listarTelefones());
+		
+		try {
+			Fachada.adicionarTelefone("Mauricio", "83", "986803355");
+			System.out.println("Adicionar Telefone >> Telefone adicionado com sucesso!");
+		} catch (Exception a) {
+			System.out.println(a.getMessage());
+		}
+		System.out.println(Fachada.listarTelefones());
+		
+		try {
+			Fachada.adicionarTelefone("Mauricio", "83", "999803577");
+			System.out.println("Adicionar Telefone >> Telefone adicionado com sucesso!");
+		} catch (Exception a) {
+			System.out.println(a.getMessage());
+		}
+		System.out.println(Fachada.listarTelefones());
+		
+		try {
+			Fachada.removerTelefone("Mauricio", "986803355");
+		} catch (Exception a) {
+			System.out.println(a.getMessage());
+		}
+		
+		System.out.println(Fachada.listarTelefones());
+		
+		try {
+			System.out.println(Fachada.listarContatosPorNome("Mau"));
+		} catch (Exception a) {
+			System.out.println(a.getMessage());
+		}
 
 	}
 

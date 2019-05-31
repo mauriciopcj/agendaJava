@@ -24,7 +24,19 @@ public class Fachada {
 	
 	// retorna todos os objetos Contato (se termo for “”) ou retorna apenas aqueles cujos nome contém o termo
 	
-	public static ArrayList<Contato> listarContatosPorNome(String termo){
+	public static ArrayList<Contato> listarContatosPorNome(String termo) throws Exception {
+		
+		ArrayList<Contato> contatos = agenda.getContatos();
+		ArrayList<Contato> resultado = new ArrayList<Contato>();
+		if (!contatos.isEmpty()) {
+			for (Contato c: contatos) {
+				if(c.getNome().equals(termo) || c.getNome().contains(termo)) {
+					resultado.add(c);
+				}
+			}
+			return resultado;
+		}
+		throw new Exception("Listar Contatos >> Nenhum contato encontrado!");
 		
 	}
 	
@@ -67,8 +79,12 @@ public class Fachada {
 	
 	// cria um objeto Contato e adiciona na Agenda
 	
-	public static Contato cadastrarContato(String nome, String email, String cep, String endereco, String numero, String link, int grau, int dia, int mes) {
-		Contato contato = new Contato(nome, email, cep, endereco, numero, link, grau, mes, dia);
+	public static Contato cadastrarContato(String nome, String email, String cep, String endereco, String numero, String link, int grau, int dia, int mes) throws Exception {
+		Contato contato = agenda.localizarContato(nome);
+		if(contato != null) {
+			throw new Exception("Cadastrar Contato >> Contato já existe! >> " + nome);
+		}
+		contato = new Contato(nome, email, cep, endereco, numero, link, grau, mes, dia);
 		agenda.adicionar(contato);
 		return contato;
 	}
@@ -76,20 +92,42 @@ public class Fachada {
 	// cria um objeto Telefone e adiciona ao objeto Contato (e vice-versa) e adiciona na Agenda
 	
 	public static void adicionarTelefone(String nome, String ddd, String numero) throws  Exception {
+		
 		Contato contato = agenda.localizarContato(nome);
-		if (contato != null) {
-			throw new Exception("O contato já existe!");
+		if (contato == null) {
+			throw new Exception("Adicionar Telefone >> Contato não cadastrado! >> " + nome);
 		}
-		Telefone telefone = new Telefone(ddd,numero);
-		contato.adicionar(telefone);
-		telefone.adicionar(contato);
-		agenda.adicionar(contato);
-		agenda.adicionar(telefone);
+		
+		Telefone telefone1 = agenda.localizarTelefone(numero);
+		if (telefone1 == null) {
+			telefone1 = new Telefone(ddd,numero);
+			agenda.adicionar(telefone1);
+			contato.adicionar(telefone1);
+			telefone1.adicionar(contato);
+		} else {
+			Telefone telefone = contato.localizarTelefone(numero);
+			if(telefone != null) {
+				throw new Exception("Adicionar Telefone >> Contato já possui este número! >> " + numero);
+			}
+			contato.adicionar(telefone);
+			telefone.adicionar(contato);
+		}
+		
 	}
 	
 	// remove um objeto Telefone de um objeto Contato (e vice-versa), mas não o remove da Agenda
 	
-	public static void removerTelefone(String nome, String[] numero) {
+	public static void removerTelefone(String nome, String numero) throws Exception {
+		
+		Contato contato = agenda.localizarContato(nome);
+		if (contato == null) {
+			throw new Exception("Remover Telefone >> Contato não cadastrado! >> " + nome);
+		}
+		Telefone t = contato.localizarTelefone(numero);
+		if (t == null) {
+			throw new Exception("Remover Telefone >> Contato não possui este número >> " + numero);
+		}
+		contato.remover(t);
 		
 	}
 	

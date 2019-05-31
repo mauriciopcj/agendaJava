@@ -13,15 +13,8 @@ import java.util.ArrayList;
 
 public class Contato {
 	
-	private String nome;
-	private String email;
-	private String cep;
-	private String endereco;
-	private String numero;
-	private String linkfacebook;
-	private int grauproximidade;
-	private int mesaniversario;
-	private int diaaniversario;
+	private String nome, email, cep, endereco, numero, linkfacebook;
+	private int grauproximidade, mesaniversario, diaaniversario;
 	private ArrayList<Telefone> telefones = new ArrayList<>();
 	
 	/* CONSTRUTORES */
@@ -57,6 +50,17 @@ public class Contato {
 	
 	public void adicionar(Telefone t) {
 		telefones.add(t);
+	}
+	public void remover(Telefone t) {
+		telefones.remove(t);
+	}
+	public Telefone localizarTelefone(String numero){
+		for(Telefone t : telefones){
+			if(t.getNumero().equals(numero)) {
+				return t;
+			}
+		}
+		return null;
 	}
 	
 	/* METODOS GET*/

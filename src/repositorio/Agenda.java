@@ -49,7 +49,7 @@ public class Agenda {
 	
 	public Contato localizarContato(String nome){
 		for(Contato c : contatos){
-			if(c.getNome() == nome) {
+			if(c.getNome().equals(nome)) {
 				return c;
 			}
 		}
@@ -57,7 +57,7 @@ public class Agenda {
 	}
 	public Telefone localizarTelefone(String numero){
 		for(Telefone t : telefones){
-			if(t.getNumero() == numero) {
+			if(t.getNumero().equals(numero)) {
 				return t;
 			}
 		}

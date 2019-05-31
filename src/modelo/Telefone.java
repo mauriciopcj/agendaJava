@@ -19,12 +19,6 @@ public class Telefone {
 	
 	/* CONSTRUTORES */
 	
-	public Telefone(String ddd, String numero, ArrayList<Contato> contatos) {
-		this.ddd = ddd;
-		this.numero = numero;
-		this.contatos = contatos;
-	}
-	
 	public Telefone(String ddd, String numero) {
 		this.ddd = ddd;
 		this.numero = numero;
