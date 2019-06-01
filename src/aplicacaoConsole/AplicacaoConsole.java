@@ -55,7 +55,7 @@ public class AplicacaoConsole {
 		System.out.println(Fachada.listarTelefones());
 		
 		try {
-			Fachada.adicionarTelefone("Mauricio", "83", "986803355");
+			Fachada.adicionarTelefone("Mauro", "83", "986803355");
 			System.out.println("Adicionar Telefone >> Telefone adicionado com sucesso!");
 		} catch (Exception a) {
 			System.out.println(a.getMessage());
@@ -63,7 +63,7 @@ public class AplicacaoConsole {
 		System.out.println(Fachada.listarTelefones());
 		
 		try {
-			Fachada.adicionarTelefone("Mauricio", "83", "999803577");
+			Fachada.adicionarTelefone("Mauro", "83", "999803577");
 			System.out.println("Adicionar Telefone >> Telefone adicionado com sucesso!");
 		} catch (Exception a) {
 			System.out.println(a.getMessage());
@@ -78,8 +78,31 @@ public class AplicacaoConsole {
 		
 		System.out.println(Fachada.listarTelefones());
 		
+		System.out.println("\n1 - A partir daqui!\n");
+		
 		try {
-			System.out.println(Fachada.listarContatosPorNome("Mau"));
+			System.out.println(Fachada.listarContatosPorNome(""));
+		} catch (Exception a) {
+			System.out.println(a.getMessage());
+		}
+		
+		try {
+			System.out.println("\n2 - A partir daqui!\n");
+			System.out.println(Fachada.listarContatosPorTelefone("9780"));
+		} catch (Exception a) {
+			System.out.println(a.getMessage());
+		}
+		
+		try {
+			System.out.println("\n3 - A partir daqui!\n");
+			System.out.println(Fachada.listarContatosPorProximidade(1));
+		} catch (Exception a) {
+			System.out.println(a.getMessage());
+		}
+		
+		try {
+			System.out.println("\n4 - A partir daqui!\n");
+			System.out.println(Fachada.consulta2());
 		} catch (Exception a) {
 			System.out.println(a.getMessage());
 		}

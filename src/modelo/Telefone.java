@@ -29,6 +29,17 @@ public class Telefone {
 	public void adicionar(Contato c) {
 		contatos.add(c);
 	}
+	public void remover(Contato c) {
+		contatos.remove(c);
+	}
+	public Contato localizarContato(String nome){
+		for(Contato c : contatos){
+			if(c.getNome().equals(nome)) {
+				return c;
+			}
+		}
+		return null;
+	}
 	
 	/* METODOS GET */
 	
@@ -37,6 +48,9 @@ public class Telefone {
 	}
 	public String getNumero() {		// NUMERO
 		return numero;
+	}
+	public ArrayList<Contato> getContatos() { // CONTATOS
+		return contatos;
 	}
 	
 	/* METODOS SET */
@@ -51,6 +65,6 @@ public class Telefone {
 	/* METODO toString */
 	
 	public String toString() {
-		return "(" + ddd + ") " + numero;
+		return "(" + ddd + ") " + numero.substring(0,5) + "-" + numero.substring(5);
 	}
 }

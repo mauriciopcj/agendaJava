@@ -30,7 +30,7 @@ public class Compromisso {
 	public Compromisso (int id) {
 		this.id = id;
 	}
-
+	
 	/* METODOS GET */
 	
 	public int getId() {					// ID
@@ -66,7 +66,5 @@ public class Compromisso {
 	public String toString() {
 		return "Compromisso [id=" + id + ", titulo=" + titulo + ", datahora=" + datahora + ", tipo=" + tipo + "]";
 	}
-	
-	
 	
 }

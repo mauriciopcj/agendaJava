@@ -20,20 +20,6 @@ public class Contato {
 	/* CONSTRUTORES */
 	
 	public Contato (String nome, String email, String cep, String endereco, String numero, String linkfacebook,
-			int grauproximidade, int mesaniversario, int diaaniversario, ArrayList<Telefone> telefones) {
-		this.nome = nome;
-		this.email = email;
-		this.cep = cep;
-		this.endereco = endereco;
-		this.numero = numero;
-		this.linkfacebook = linkfacebook;
-		this.grauproximidade = grauproximidade;
-		this.mesaniversario = mesaniversario;
-		this.diaaniversario = diaaniversario;
-		this.telefones = telefones;
-	}
-	
-	public Contato (String nome, String email, String cep, String endereco, String numero, String linkfacebook,
 			int grauproximidade, int mesaniversario, int diaaniversario) {
 		this.nome = nome;
 		this.email = email;
@@ -44,6 +30,10 @@ public class Contato {
 		this.grauproximidade = grauproximidade;
 		this.mesaniversario = mesaniversario;
 		this.diaaniversario = diaaniversario;
+	}
+	
+	public Contato (String nome) {
+		this.nome = nome;
 	}
 	
 	/* UTILITARIOS */
@@ -124,9 +114,6 @@ public class Contato {
 	}
 	public void setDiaaniversario(int diaaniversario) {			// DIA
 		this.diaaniversario = diaaniversario;
-	}
-	public void setTelefones(ArrayList<Telefone> telefones) {	// TELEFONES
-		this.telefones = telefones;
 	}
 
 	/* METODO toString */
