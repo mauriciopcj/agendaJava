@@ -49,7 +49,7 @@ public class Agenda {
 	
 	public Contato localizarContato(String nome){
 		for(Contato c : contatos){
-			if(c.getNome().equals(nome)) {
+			if(c.getNome().toLowerCase().equals(nome.toLowerCase())) {
 				return c;
 			}
 		}

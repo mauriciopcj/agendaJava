@@ -9,6 +9,8 @@
 
 package aplicacaoConsole;
 
+import java.util.ArrayList;
+
 import fachada.Fachada;
 import modelo.Contato;
 import modelo.Telefone;
@@ -18,21 +20,21 @@ public class AplicacaoConsole {
 	public static void main(String[] args) {
 
 		try {
-			Fachada.cadastrarContato("Mauricio", "mauricio@mauricio", "58052", "nome da rua", "115", "mauriciojunior", 1, 9, 22);
+			Fachada.cadastrarContato("Mauricio", "mauricio@mauricio", "58052280", "Jornalista Genesio Gambarra Filho", "115", "mauriciojunior", 1, 9, 22);
 			System.out.println("Cadastrar Contato >> Contato cadastrado com sucesso!");
 		} catch (Exception a){
 			System.out.println(a.getMessage());
 		}
 		
 		try {
-			Fachada.cadastrarContato("Mauro", "mauricio@mauricio", "58052", "nome da rua", "115", "mauriciojunior", 1, 9, 22);
+			Fachada.cadastrarContato("Mauro", "mauro@mauro", "58052", "nome da rua", "115", "mauro", 1, 9, 22);
 			System.out.println("Cadastrar Contato >> Contato cadastrado com sucesso!");
 		} catch (Exception a){
 			System.out.println(a.getMessage());
 		}
 		
 		try {
-			Fachada.cadastrarContato("Jose", "mauricio@mauricio", "58052", "nome da rua", "115", "mauriciojunior", 1, 9, 22);
+			Fachada.cadastrarContato("Jose", "jose@jose", "58052", "nome da rua", "115", "mauriciojunior", 1, 9, 22);
 			System.out.println("Cadastrar Contato >> Contato cadastrado com sucesso!");
 		} catch (Exception a){
 			System.out.println(a.getMessage());
@@ -107,6 +109,8 @@ public class AplicacaoConsole {
 			System.out.println(a.getMessage());
 		}
 
+		
+		
 	}
 
 }

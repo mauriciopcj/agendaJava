@@ -9,8 +9,11 @@
 
 package fachada;
 
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import modelo.Compromisso;
 import modelo.Contato;
@@ -21,6 +24,9 @@ public class Fachada {
 	
 	public static Agenda agenda = new Agenda();
 	private static int idcompromisso = 0;
+	private static Pattern padraoEmail = Pattern.compile(
+			"^([0-9a-zA-Z]+([_.-]?[0-9a-zA-Z]+)*@[0-9a-zA-Z]+[0-9a-zA-Z,.,-]*(.){1}[a-zA-Z]{2,4})+$");
+	private static Pattern padraoNome = Pattern.compile("^[[ ]|\\p{L}*]+$");
 	
 	// retorna todos os objetos Contato (se termo for “”) ou retorna apenas aqueles cujos nome contém o termo
 	
@@ -33,7 +39,7 @@ public class Fachada {
 				return contatos;
 			}
 			for (Contato c: contatos) {
-				if(c.getNome().equals(termo) || c.getNome().contains(termo)) {
+				if(c.getNome().toLowerCase().equals(termo.toLowerCase()) || c.getNome().toLowerCase().contains(termo.toLowerCase())) {
 					resultado.add(c);
 				}
 			}
@@ -100,7 +106,7 @@ public class Fachada {
 		ArrayList<Compromisso> resultado = new ArrayList<Compromisso>();
 		if (!compromissos.isEmpty()) {
 			for (Compromisso c: compromissos) {
-				if (c.getTitulo().equals(termo)) {
+				if (c.getTitulo().toLowerCase().equals(termo.toLowerCase()) || c.getTitulo().toLowerCase().contains(termo.toLowerCase())) {
 					resultado.add(c);
 				}
 			}
@@ -121,7 +127,7 @@ public class Fachada {
 		ArrayList<Compromisso> resultado = new ArrayList<Compromisso>();
 		if (!compromissos.isEmpty()) {
 			for (Compromisso c: compromissos) {
-				if (c.getDatahora().isBefore(data1) && c.getDatahora().isAfter(data2)) {
+				if ((c.getDatahora().isAfter(data1) && c.getDatahora().isBefore(data2)) || c.getDatahora().equals(data1) || c.getDatahora().equals(data2)) {
 					resultado.add(c);
 				}
 			}
@@ -142,7 +148,7 @@ public class Fachada {
 		ArrayList<Compromisso> resultado = new ArrayList<Compromisso>();
 		if (!compromissos.isEmpty()) {
 			for (Compromisso c: compromissos) {
-				if (!c.getTipo().equals(tipo)) {
+				if (c.getTipo().equals(tipo)) {
 					resultado.add(c);
 				}
 			}
@@ -166,11 +172,39 @@ public class Fachada {
 	
 	public static Contato cadastrarContato(String nome,String email,String cep,String endereco, String numero,
 			String link,int grau,int dia,int mes) throws Exception {
+		
+		///////////////////////////////////////////////////////////// VALIDACOES
+
+		Matcher alvoEmail = padraoEmail.matcher(email);
+		if(!alvoEmail.matches())
+			throw new Exception("Email inválido!");
+		
+		Matcher alvoNome = padraoNome.matcher(nome);
+		if(!alvoNome.matches())
+			throw new Exception("Nome inválido!");
+		
+		///////////////////////////////////////////////////////// FIM VALIDACOES
+		
 		Contato contato = agenda.localizarContato(nome);
 		if(contato != null) {
 			throw new Exception("Cadastrar Contato >> Contato já existe! >> " + nome);
 		}
 		contato = new Contato(nome, email,cep, endereco, numero, link, grau, dia, mes);
+		agenda.adicionar(contato);
+		return contato;
+	}
+	
+	public static Contato cadastrarContatoNome(String nome) throws Exception {
+		
+		Matcher alvoNome = padraoNome.matcher(nome);
+		if(!alvoNome.matches())
+			throw new Exception("Nome inválido!");
+		
+		Contato contato = agenda.localizarContato(nome);
+		if(contato != null) {
+			throw new Exception("Cadastrar Contato >> Contato já existe! >> " + nome);
+		}
+		contato = new Contato(nome);
 		agenda.adicionar(contato);
 		return contato;
 	}
@@ -195,8 +229,8 @@ public class Fachada {
 			if(telefone2 != null) {
 				throw new Exception("Adicionar Telefone >> Contato já possui este número! >> " + numero);
 			}
-			contato.adicionar(telefone2);
-			telefone2.adicionar(contato);
+			contato.adicionar(telefone1);
+			telefone1.adicionar(contato);
 		}
 		
 	}
@@ -219,13 +253,16 @@ public class Fachada {
 			throw new Exception("Remover Telefone >> Telefone não possui este contato >> " + nome);
 		}
 		telefone.remover(c2);
-		
 	}
 	
 	// cria um objeto Compromisso e adiciona na Agenda
 	
-	public static Compromisso cadastrarCompromisso(String titulo, int dia, int mês, int ano, int hora, int minuto, String tipo) {
-		
+	public static Compromisso cadastrarCompromisso(String titulo, int dia, int mes, int ano, int hora, int minuto, String tipo) {
+		idcompromisso++;
+		LocalDateTime data = LocalDateTime.of(ano, mes, dia, hora, minuto);
+		Compromisso compromisso = new Compromisso(idcompromisso, titulo, data , tipo);
+		agenda.adicionar(compromisso);
+		return compromisso;
 	}
 	
 	// retorna o nome dos contatos que tem 2 telefones ou mais
@@ -236,7 +273,7 @@ public class Fachada {
 		ArrayList<String> resultado = new ArrayList<String>();
 		if (!contatos.isEmpty()) {
 			for (Contato c: contatos) {
-				if(c.getTelefones().size() > 2) {
+				if(c.getTelefones().size() >= 2) {
 					resultado.add(c.getNome());
 				}
 			}
@@ -257,7 +294,7 @@ public class Fachada {
 		ArrayList<String> resultado = new ArrayList<String>();
 		if (!telefones.isEmpty()) {
 			for (Telefone t: telefones) {
-				if(t.getContatos().size() > 2) {
+				if(t.getContatos().size() >= 2) {
 					resultado.add(t.getNumero());
 				}
 			}
@@ -268,6 +305,18 @@ public class Fachada {
 		}
 		throw new Exception("Consulta 2 >> Nenhum contato encontrado!");
 		
+	}
+	
+	
+	public static Contato alterarDados(String nome) throws Exception {
+		if(nome.contentEquals("")) {
+			throw new Exception("Campo nome vazio!");
+		}
+		Contato contato = agenda.localizarContato(nome);
+		if(contato == null) {
+			throw new Exception("Contato não encontrado!");
+		}
+		return contato;
 	}
 	
 }
