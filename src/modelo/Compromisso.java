@@ -19,20 +19,17 @@ public class Compromisso {
 	private String tipo;
 	
 	/* CONSTRUTORES */
-	
 	public Compromisso (int id, String titulo, LocalDateTime datahora, String tipo) {
 		this.id = id;
 		this.titulo = titulo;
 		this.datahora = datahora;
 		this.tipo = tipo;
 	}
-	
 	public Compromisso (int id) {
 		this.id = id;
 	}
 	
-	/* METODOS GET */
-	
+	// METODOS GET
 	public int getId() {					// ID
 		return id;
 	}
@@ -47,7 +44,6 @@ public class Compromisso {
 	}
 	
 	/* METODOS SET */
-	
 	public void setId(int id) {							// ID
 		this.id = id;
 	}
@@ -62,7 +58,6 @@ public class Compromisso {
 	}
 
 	/* METODO toString */
-	
 	public String toString() {
 		return "Compromisso [id=" + id + ", titulo=" + titulo + ", datahora=" + datahora + ", tipo=" + tipo + "]";
 	}

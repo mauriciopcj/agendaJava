@@ -10,6 +10,7 @@
 package repositorio;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 import modelo.Compromisso;
 import modelo.Contato;
@@ -17,14 +18,14 @@ import modelo.Telefone;
 
 public class Agenda {
 	
-	private ArrayList<Contato> contatos = new ArrayList<Contato>();
+	private TreeMap<String,Contato> contatos = new TreeMap<>();
 	private ArrayList<Telefone> telefones = new ArrayList<Telefone>();
 	private ArrayList<Compromisso> compromissos = new ArrayList<Compromisso>();
 	
 	/* METODOS ADICIONAR */
 	
-	public void adicionar(Contato c) {
-		contatos.add(c);
+	public void adicionar(String nome, Contato c) {
+		contatos.put(nome,c);
 	}
 	public void adicionar(Telefone t) {
 		telefones.add(t);
@@ -35,8 +36,8 @@ public class Agenda {
 	
 	/* METODOS REMOVER */
 	
-	public void remover(Contato c) {
-		contatos.remove(c);
+	public void remover(String nome) {
+		contatos.remove(nome);
 	}
 	public void remover(Telefone t) {
 		telefones.remove(t);
@@ -48,12 +49,7 @@ public class Agenda {
 	/* METODOS LOCALIZAR */
 	
 	public Contato localizarContato(String nome){
-		for(Contato c : contatos){
-			if(c.getNome().toLowerCase().equals(nome.toLowerCase())) {
-				return c;
-			}
-		}
-		return null;
+		return contatos.get(nome);
 	}
 	public Telefone localizarTelefone(String numero){
 		for(Telefone t : telefones){
@@ -74,7 +70,7 @@ public class Agenda {
 	
 	/* METODOS GET */
 	
-	public ArrayList<Contato> getContatos() {
+	public TreeMap<String,Contato> getContatos() {
 		return contatos;
 	}
 	public ArrayList<Telefone> getTelefones() {

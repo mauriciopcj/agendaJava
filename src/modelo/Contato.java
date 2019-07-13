@@ -119,10 +119,20 @@ public class Contato {
 	/* METODO toString */
 	
 	public String toString() {
-		return "Contato\n------\nnome: " + nome + "\nemail: " + email + "\ncep: " + cep + "\nendereco: " + endereco + "\nnumero: "
+		String result = "Contato\n------\nnome: " + nome + "\nemail: " + email + "\ncep: " + cep + "\nendereco: " + endereco + "\nnumero: "
 				+ numero + "\nlinkfacebook: " + linkfacebook + "\ngrauproximidade: " + grauproximidade
-				+ "\nmesaniversario: " + mesaniversario + "\ndiaaniversario: " + diaaniversario + "\ntelefones: "
-				+ telefones ;
+				+ "\nmesaniversario: " + mesaniversario + "\ndiaaniversario: " + diaaniversario + "\ntelefone(s): ";
+		if(!telefones.isEmpty()) {
+			for(Telefone t: telefones) {
+				if(telefones.indexOf(t) == telefones.size()-1) {
+					result += t;
+				} else {
+					result += t + ", ";
+				}
+			}
+		}
+		
+		return  result;
 	}
 
 }
